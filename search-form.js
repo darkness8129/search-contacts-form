@@ -32,42 +32,38 @@ let CONTACTS = [
         ];
 
 let Contact = React.createClass({
-	getInitialState: function(){
+	getInitialState() {
 		return {
-			isOpened: false
+			isOpen: false
 		}
 	},
 
     //func that open and close contact 
-	openContactFunc: function(event){
-		let isOpened = this.state.isOpened;
-		this.setState({
-			isOpened: !isOpened
-		});
+	handleOpenContact(event) {
+		let {isOpen} = this.state;
+		this.setState({isOpen: !isOpen});
 	},
 
-    render: function(){
+    render() {
+        let {isOpen} = this.state;
         // if false -  closed contact, true - opened
-        return  this.state.isOpened === false ? (<li className = "contact" onClick = {this.openContactFunc}>
+        return  <li className = "contact" onClick = {this.handleOpenContact}>
                     <img src = {this.props.img} width = "60px" height = "60px" className = "contact-image"/>
                     <div className = "contact-info">
                         <div className = "contact-name">{this.props.name}</div>
                         <div className = "contact-number">{this.props.phoneNumber}</div>
+                        {isOpen && (
+                        <div className = "aditional-info">
+                            <div className = "contact-email">{this.props.email}</div>
+                            <div className = "contact-address">{this.props.address}</div>
+                        </div>)}
                     </div>
-                </li>):
-        		(<li className = "contact" onClick = {this.openContactFunc}>
-                    <img src = {this.props.img} width = "60px" height = "60px" className = "contact-image"/>
-                    <div className = "contact-info">
-                        <div className = "contact-name">{this.props.name}</div>
-                        <div className = "contact-number">{this.props.phoneNumber}</div>
-                        <div className = "contact-email">{this.props.email}</div>
-                        <div className = "contact-address">{this.props.address}</div>
-                    </div>
-                </li>);
+                </li>;
     }
 });
+
 let ContactsList = React.createClass({
-    getInitialState:function(){
+    getInitialState() {
         return {
             displayedContacts: CONTACTS
         };
@@ -75,31 +71,28 @@ let ContactsList = React.createClass({
     },
 
     //func for searching contacts
-    handleSearch: function(event){
+    handleSearch(event){
         let searchQuery = event.target.value.toLowerCase();
-        let displayedContacts = CONTACTS.filter(function(elem){
+        let displayedContacts = CONTACTS.filter((elem) => {
             let searchValue = elem.name.toLowerCase();
             return searchValue.indexOf(searchQuery) !== -1;
         });
-        this.setState({
-            displayedContacts: displayedContacts
-        });
+        this.setState({displayedContacts});
     },
 
-    render: function(){
-        return(
+    render(){
+        return (
             <div className = "contacts">
                 <input type = "text" className = "search-field" placeholder="Search..." onChange = {this.handleSearch}/>
                 <ul className = "contacts-list">
                     {
-                        this.state.displayedContacts.map(function(elem){
+                        this.state.displayedContacts.map((elem) => {
                             return <Contact key = {elem.id}
                                 name = {elem.name}
                                 phoneNumber = {elem.phoneNumber}
                                 img = {elem.image}
                                 email = {elem.email}
-                                address = {elem.address}
-                                />;
+                                address = {elem.address}/>;
                         })
                     }
                 </ul>
@@ -107,7 +100,5 @@ let ContactsList = React.createClass({
         );
     }
 });
-ReactDOM.render(
-    <ContactsList/>,
-    document.getElementById('content')
-);
+
+ReactDOM.render(<ContactsList/>, document.getElementById('content')); 
