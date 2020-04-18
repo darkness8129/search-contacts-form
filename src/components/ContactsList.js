@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './contactsList.css';
+import '../style/contactsList.css';
 import Contact from './Contact.js';
 
 let CONTACTS = [
@@ -7,7 +7,7 @@ let CONTACTS = [
     id: 1,
     name: 'Darth Vader',
     phoneNumber: '+250966666666',
-    image: 'img/darth.gif',
+    image: './img/darth.gif',
     email: 'darth@gmail.com',
     address: 'Ship 3, room 5'
   }, {

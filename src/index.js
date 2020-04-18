@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ContactList from './ContactsList.js';
+import ContactList from './components/ContactsList.js';
 
 ReactDOM.render(
   <React.StrictMode>
